@@ -62,6 +62,8 @@ class ApplicationController < ActionController::Base
     Rails.logger.debug {"checking email: #{session[:email]}"}
     Rails.logger.debug {"request path: #{request.path}"}
 
+    Rails.logger.debug {"What is /google_oauth2/: #{/google_oauth2/}"}
+
     return if session[:email]
     return if /google_oauth2/.match?(request.path)
 
