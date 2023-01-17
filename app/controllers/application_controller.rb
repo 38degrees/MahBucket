@@ -63,7 +63,6 @@ class ApplicationController < ActionController::Base
     Rails.logger.debug {"request path: #{request.path}"}
 
     Rails.logger.debug {"omniauth hash: #{request.env['omniauth.auth']}"}
-    Rails.logger.debug {"request env: #{request.env}"}
 
     return if session[:email]
     return if /google_oauth2/.match?(request.path)
