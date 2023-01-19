@@ -24,7 +24,6 @@ class ApplicationController < ActionController::Base
     ip_addresses = list_of_permitted_ips( self.class.permitted_ips_from_env )
 
     Rails.logger.debug { "check_permitted_ips: checking ip: #{ip_to_verify} against #{ip_addresses}" }
-    Rails.logger.debug {"did ip check out: #{ip_addresses.include? ip_to_verify}"}
     return if ip_addresses.include? ip_to_verify
 
     render plain: 'Access Denied', status: :unauthorized
@@ -58,11 +57,6 @@ class ApplicationController < ActionController::Base
       session[:email] = 'admin@example.com'
       return
     end
-    Rails.logger.debug {"checking email: #{session[:email]}"}
-    Rails.logger.debug {"request path: #{request.path}"}
-
-    Rails.logger.debug {"omniauth hash: #{request.env['omniauth.auth']}"}
-
     return if session[:email]
     return if /google_oauth2/.match?(request.path)
 
