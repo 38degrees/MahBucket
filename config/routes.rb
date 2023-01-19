@@ -10,5 +10,4 @@ Rails.application.routes.draw do
 
   # OmniAuth
   get '/auth/:provider/callback', to: 'sessions#create'
-  # get 'auth/failure', to: redirect('/403.html')
 end
