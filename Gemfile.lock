@@ -416,6 +416,7 @@ DEPENDENCIES
   nokogiri (>= 1.11.0.rc4)!
   omniauth (~> 2.0)!
   omniauth-google-oauth2!
+  omniauth-rails_csrf_protection!
   paperclip-meta!
   pg!
   pry-rails!
