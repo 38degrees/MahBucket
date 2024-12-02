@@ -80,6 +80,5 @@ source 'https://rubygems.org' do
     gem 'rspec'
     gem 'rspec_junit_formatter'
     gem 'selenium-webdriver'
-    gem 'webdrivers', '~> 5'
   end
 end

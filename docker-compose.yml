@@ -3,7 +3,7 @@ version: '3'
 x-service-fragments:
   ##### Abstract services for common setup #####
   app: &app
-    image: ruby
+    image: cimg/ruby:3.3.5-browsers
     networks:
       - default
     volumes:
@@ -29,11 +29,10 @@ services:
       - 'postgres:/var/lib/postgresql/data'
 
   web:
-    networks:
-      - default
-    build:
-      dockerfile: Dockerfile
-      context: .
+    <<: *app
+    volumes:
+      - '.:/usr/src/app:cached'
+    working_dir: /usr/src/app
     ports:
       # Use a default port of 3005, but allow it to be overriden by an env variable
       # E.g. `PORT=3001 docker-compose up`
@@ -49,7 +48,7 @@ services:
       - DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true
       - SKIP_AUTH=true
     command: sh -c 'bundle check || bundle install && rm -f /tmp/.X99-lock && bundle exec rails db:create  db:environment:set db:schema:load && bundle exec rubocop && bundle exec rspec && bundle exec puma -C ./config/puma.rb'
-    
+
 volumes:
   postgres:
   bundle_cache:
