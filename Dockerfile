@@ -1,6 +1,6 @@
 # This Dockerfile uses a circleci image for convenience.
 
-FROM circleci/ruby:3.0.0-node-browsers
+FROM cimg/ruby:3.3.5-browsers
 
 USER root
 RUN mkdir /app
@@ -17,4 +17,4 @@ RUN bundle config set path '/bundle'
 
 RUN mkdir -p /tmp/sockets
 
-CMD bundle check || bundle install && bundle exec puma -C ./config/puma.rb
+# CMD bundle check || bundle install && bundle exec puma -C ./config/puma.rb

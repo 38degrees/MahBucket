@@ -4,18 +4,18 @@
 
 version: 2.1
 orbs:
-  ruby: circleci/ruby@1.1.1
+  ruby: circleci/ruby@2.2.1
 jobs:
   build:
     docker:
-      - image: circleci/ruby:3.0.0-node-browsers
+      - image: cimg/ruby:3.3.5-browsers
         environment:
         - RACK_ENV=test
         - RAILS_ENV=test
         - DATABASE_URL=postgres://testuser:testpass@127.0.0.1:5432/mahbucket_test
         - SKIP_AUTH=true
 
-      - image: circleci/postgres:10-alpine-ram
+      - image: cimg/postgres:10.20
         environment:
           - POSTGRES_USER=testuser
           - POSTGRES_PASSWORD=testpass

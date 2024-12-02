@@ -19,7 +19,7 @@ x-service-fragments:
 services:
   ##### Concrete services #####
   postgres:
-    image: 'postgres:9.6-alpine'
+    image: 'cimg/postgres:10.20'
     environment:
       # The Postgres image uses these to create a db user - note the user/pass here should match that in your env file!
       - POSTGRES_USER=user
@@ -29,7 +29,8 @@ services:
       - 'postgres:/var/lib/postgresql/data'
 
   web:
-    <<: *app
+    networks:
+      - default
     build:
       dockerfile: Dockerfile
       context: .
@@ -48,7 +49,6 @@ services:
       - DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true
       - SKIP_AUTH=true
     command: sh -c 'bundle check || bundle install && rm -f /tmp/.X99-lock && bundle exec rails db:create  db:environment:set db:schema:load && bundle exec rubocop && bundle exec rspec && bundle exec puma -C ./config/puma.rb'
-
     
 volumes:
   postgres:
