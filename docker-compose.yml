@@ -3,7 +3,7 @@ version: '3'
 x-service-fragments:
   ##### Abstract services for common setup #####
   app: &app
-    image: cimg/ruby:3.3.5-browsers
+    image: ruby
     networks:
       - default
     volumes:
@@ -19,7 +19,7 @@ x-service-fragments:
 services:
   ##### Concrete services #####
   postgres:
-    image: 'cimg/postgres:10.20'
+    image: 'postgres:9.6-alpine'
     environment:
       # The Postgres image uses these to create a db user - note the user/pass here should match that in your env file!
       - POSTGRES_USER=user
@@ -30,9 +30,9 @@ services:
 
   web:
     <<: *app
-    volumes:
-      - '.:/usr/src/app:cached'
-    working_dir: /usr/src/app
+    build:
+      dockerfile: Dockerfile
+      context: .
     ports:
       # Use a default port of 3005, but allow it to be overriden by an env variable
       # E.g. `PORT=3001 docker-compose up`
@@ -49,6 +49,7 @@ services:
       - SKIP_AUTH=true
     command: sh -c 'bundle check || bundle install && rm -f /tmp/.X99-lock && bundle exec rails db:create  db:environment:set db:schema:load && bundle exec rubocop && bundle exec rspec && bundle exec puma -C ./config/puma.rb'
 
+    
 volumes:
   postgres:
   bundle_cache:
