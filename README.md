@@ -10,7 +10,7 @@ should hopefully be useful (or at least usable) for other file types too.
 ## Ruby and Rails versions
 
 Mah Bucket was initially developed using Ruby 2.3.1 and Rails 5.0.1, and is
-currently using Ruby 3.3.5 and Rails ~>6.1.7 - so it should have a fairly wide
+currently using Ruby 2.7.1 and Rails 6.0.3 - so it should have a fairly wide
 compatibility range. If you find a version of either that it won't run with,
 please let me know.
 
