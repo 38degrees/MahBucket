@@ -1,4 +1,4 @@
-ruby "3.0.0"
+ruby "3.3.5"
 
 source 'https://rubygems.org' do
   gem 'rails', '~> 6.1.7'
@@ -80,6 +80,5 @@ source 'https://rubygems.org' do
     gem 'rspec'
     gem 'rspec_junit_formatter'
     gem 'selenium-webdriver'
-    gem 'webdrivers', '~> 4.4'
   end
 end
