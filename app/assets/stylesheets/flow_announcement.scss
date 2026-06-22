@@ -1,0 +1,152 @@
+// "Try the new version in Flow" first-visit-of-the-day popup.
+// Auto-included via require_tree in application.css.
+
+$flow-orange: #f05a28;
+$flow-orange-dark: #d2461a;
+$flow-ink: #1f2733;
+$flow-muted: #5b6675;
+$flow-line: #e4e8ee;
+
+.flow-announce-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(20, 27, 38, 0.55);
+  backdrop-filter: blur(2px);
+
+  &.hidden {
+    display: none !important;
+  }
+}
+
+.flow-announce-modal {
+  width: 430px;
+  max-width: 100%;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(8, 15, 30, 0.4);
+  animation: flow-announce-pop 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: $flow-ink;
+  line-height: 1.55;
+}
+
+@keyframes flow-announce-pop {
+  from {
+    transform: translateY(14px) scale(0.96);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.flow-announce-top {
+  position: relative;
+  padding: 20px 24px;
+  color: #fff;
+  background: linear-gradient(135deg, $flow-orange, $flow-orange-dark);
+
+  h3 {
+    margin: 6px 0 0;
+    color: #fff;
+    font-size: 20px;
+  }
+}
+
+.flow-announce-badge {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.flow-announce-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.32);
+  }
+}
+
+.flow-announce-body {
+  padding: 22px 24px;
+
+  p {
+    margin: 0 0 12px;
+    font-size: 14.5px;
+    color: $flow-ink;
+  }
+}
+
+.flow-announce-steps {
+  margin: 14px 0;
+  padding: 12px 14px;
+  background: #fbf3ee;
+  border: 1px solid #f3dccf;
+  border-radius: 10px;
+  font-size: 13.5px;
+
+  b {
+    color: $flow-orange-dark;
+  }
+}
+
+.flow-announce-muted {
+  font-size: 13.5px;
+  color: $flow-muted;
+}
+
+.flow-announce-actions {
+  display: flex;
+  gap: 10px;
+  padding: 4px 24px 22px;
+}
+
+.flow-announce-btn {
+  flex: 1;
+  padding: 11px 14px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-size: 14.5px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+}
+
+.flow-announce-btn-now {
+  background: $flow-orange;
+  color: #fff;
+
+  &:hover {
+    background: $flow-orange-dark;
+  }
+}
+
+.flow-announce-btn-later {
+  background: #fff;
+  color: $flow-muted;
+  border-color: $flow-line;
+
+  &:hover {
+    background: #f5f7fa;
+  }
+}

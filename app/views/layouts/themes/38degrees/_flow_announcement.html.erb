@@ -1,0 +1,30 @@
+<%#
+  "Try the new version in Flow" first-visit-of-the-day popup.
+  Rendered hidden by default; flow_announcement.js reveals it once per day.
+  The destination URL is exposed via a data attribute so it is easy to change.
+%>
+<div class="flow-announce-overlay flow-backdrop hidden"
+     id="flow-announce"
+     data-flow-url="https://act.38degrees.org.uk/admin/#media-library/items">
+  <div class="flow-announce-modal"
+       role="dialog"
+       aria-modal="true"
+       aria-labelledby="flow-announce-title">
+    <div class="flow-announce-top">
+      <button type="button" class="flow-announce-close flow-close" aria-label="Close">&times;</button>
+      <div class="flow-announce-badge">&#10024; New &amp; improved</div>
+      <h3 id="flow-announce-title">There's a newer version in Flow</h3>
+    </div>
+    <div class="flow-announce-body">
+      <p>This file library now has a newer, improved home inside <b>Flow</b>. All of your files are available in <b>both apps</b>, so nothing moves or disappears &mdash; you can switch any time.</p>
+      <div class="flow-announce-steps">
+        To find it in Flow: open <b>Flow</b> &rarr; select <b>Toolkit</b> &rarr; then <b>Files</b>.
+      </div>
+      <p class="flow-announce-muted">Would you like to try it now, or later?</p>
+    </div>
+    <div class="flow-announce-actions">
+      <button type="button" class="flow-announce-btn flow-announce-btn-later flow-later">Maybe later</button>
+      <button type="button" class="flow-announce-btn flow-announce-btn-now" id="flow-now">Try it now &rarr;</button>
+    </div>
+  </div>
+</div>
