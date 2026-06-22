@@ -1,13 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Flow announcement popup' do
-  before do
-    allow_any_instance_of( ItemsController ).to receive( :authenticate ).and_return(nil)
-  end
-
-  context 'on the 38degrees theme' do
+  context 'with the 38degrees theme' do
     before do
-      allow_any_instance_of( ApplicationHelper ).to receive( :theme ).and_return( '38degrees' )
+      allow( Rails.application.secrets ).to receive( :theme ).and_return( '38degrees' )
     end
 
     it 'renders the announcement modal pointing at the Flow media library' do
@@ -21,9 +17,9 @@ RSpec.describe 'Flow announcement popup' do
     end
   end
 
-  context 'on the default theme' do
+  context 'with the default theme' do
     before do
-      allow_any_instance_of( ApplicationHelper ).to receive( :theme ).and_return( 'default' )
+      allow( Rails.application.secrets ).to receive( :theme ).and_return( 'default' )
     end
 
     it 'does not render the announcement modal' do
