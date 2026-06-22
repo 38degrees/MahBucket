@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plan &amp; Mockup — "Try Flow" first-visit popup</title>
+<style>
+  :root{
+    --orange:#F05A28;
+    --orange-dark:#d2461a;
+    --ink:#1f2733;
+    --muted:#5b6675;
+    --line:#e4e8ee;
+    --bg:#f5f7fa;
+    --card:#ffffff;
+    --code-bg:#0f1722;
+    --code-ink:#e6edf3;
+    --ok:#1f9d57;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.55;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:32px 20px 80px}
+  header.hero{
+    background:linear-gradient(135deg,var(--orange),var(--orange-dark));
+    color:#fff;border-radius:16px;padding:34px 32px;margin-bottom:8px;
+    box-shadow:0 10px 30px rgba(210,70,26,.25);
+  }
+  header.hero h1{margin:0 0 6px;font-size:28px;letter-spacing:-.3px}
+  header.hero p{margin:0;opacity:.92;font-size:15px}
+  .tag{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);
+    padding:3px 10px;border-radius:999px;font-size:12px;margin-bottom:14px}
+  h2{font-size:20px;margin:38px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line)}
+  h3{font-size:15px;margin:22px 0 8px;color:var(--ink)}
+  p,li{font-size:15px;color:var(--ink)}
+  .muted{color:var(--muted)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:14px 0;
+    box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:720px){.grid{grid-template-columns:1fr}}
+  ul{padding-left:20px}
+  ol{padding-left:20px}
+  code{background:#eef1f5;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:13px;
+    font-family:"SF Mono",Menlo,Consolas,monospace;color:#b03a16}
+  pre{background:var(--code-bg);color:var(--code-ink);border-radius:12px;padding:18px 20px;overflow:auto;
+    font-size:13px;line-height:1.5;font-family:"SF Mono",Menlo,Consolas,monospace}
+  pre .c{color:#7d8a9c}
+  pre .k{color:#ff9d6b}
+  pre .s{color:#a5e0a5}
+  .step{display:flex;gap:14px;margin:14px 0}
+  .step .n{flex:0 0 30px;height:30px;border-radius:50%;background:var(--orange);color:#fff;font-weight:700;
+    display:flex;align-items:center;justify-content:center;font-size:14px}
+  .step .b{flex:1}
+  .step .b h3{margin-top:3px}
+  table{width:100%;border-collapse:collapse;margin:8px 0}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:top}
+  th{background:#fafbfc;color:var(--muted);font-weight:600}
+  .pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px}
+  .pill.js{background:#fff3e0;color:#b25c00}
+  .pill.erb{background:#e8f0ff;color:#2756c4}
+  .pill.css{background:#eafaf0;color:#1f7a45}
+
+  /* ---------- Mockup stage ---------- */
+  .stage{position:relative;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;
+    box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .browser-bar{background:#eef1f5;border-bottom:1px solid var(--line);padding:9px 14px;display:flex;align-items:center;gap:8px}
+  .dot{width:11px;height:11px;border-radius:50%}
+  .dot.r{background:#ff5f57}.dot.y{background:#febc2e}.dot.g{background:#28c840}
+  .url{flex:1;background:#fff;border:1px solid var(--line);border-radius:7px;padding:4px 12px;font-size:12px;color:var(--muted);margin-left:8px}
+  /* faux app behind the modal */
+  .appbg{position:relative;padding:22px 26px;min-height:300px}
+  .appbg img.logo{height:46px}
+  .appbg .nav{margin:14px 0;color:var(--muted);font-size:14px}
+  .appbg .nav a{color:var(--orange);text-decoration:none}
+  .appbg .files{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px;filter:blur(.4px);opacity:.55}
+  .appbg .thumb{height:84px;background:linear-gradient(135deg,#e9edf3,#dfe5ee);border:1px solid var(--line);border-radius:8px}
+  /* overlay */
+  .overlay{position:absolute;inset:0;background:rgba(20,27,38,.55);display:flex;align-items:center;justify-content:center;
+    backdrop-filter:blur(2px);padding:20px}
+  .modal{width:430px;max-width:100%;background:#fff;border-radius:16px;overflow:hidden;
+    box-shadow:0 24px 60px rgba(8,15,30,.4);animation:pop .28s cubic-bezier(.2,.9,.3,1.2)}
+  @keyframes pop{from{transform:translateY(14px) scale(.96);opacity:0}to{transform:none;opacity:1}}
+  .modal .top{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff;padding:20px 24px;position:relative}
+  .modal .top .badge{font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;opacity:.9}
+  .modal .top h3{margin:6px 0 0;color:#fff;font-size:20px}
+  .modal .close{position:absolute;top:14px;right:16px;color:#fff;background:rgba(255,255,255,.2);border:none;
+    width:28px;height:28px;border-radius:50%;font-size:16px;cursor:pointer;line-height:1}
+  .modal .body{padding:22px 24px}
+  .modal .body p{margin:0 0 12px;font-size:14.5px;color:var(--ink)}
+  .modal .steps{background:#fbf3ee;border:1px solid #f3dccf;border-radius:10px;padding:12px 14px;margin:14px 0;font-size:13.5px}
+  .modal .steps b{color:var(--orange-dark)}
+  .modal .actions{display:flex;gap:10px;padding:4px 24px 22px}
+  .btn{flex:1;border-radius:10px;padding:11px 14px;font-size:14.5px;font-weight:600;cursor:pointer;border:1px solid transparent;text-align:center}
+  .btn-now{background:var(--orange);color:#fff}
+  .btn-now:hover{background:var(--orange-dark)}
+  .btn-later{background:#fff;color:var(--muted);border-color:var(--line)}
+  .btn-later:hover{background:#f5f7fa}
+  .replaybar{display:flex;justify-content:center;padding:12px;background:#fafbfc;border-top:1px solid var(--line)}
+  .replaybar button{background:var(--ink);color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-size:13px}
+  .hidden{display:none!important}
+  .note{font-size:13px;color:var(--muted);background:#fafbfc;border-left:3px solid var(--orange);padding:8px 12px;border-radius:0 8px 8px 0;margin:10px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <span class="tag">Proposal &amp; mockup</span>
+    <h1>"Try the new version in Flow" — first-visit-of-the-day popup</h1>
+    <p>A once-per-day announcement shown to people opening Mah Bucket, pointing them to the newer file library in Flow.</p>
+  </header>
+
+  <!-- =================== MOCKUP =================== -->
+  <h2>1. Interactive mockup</h2>
+  <p class="muted">This is a live, clickable preview of the popup as it would appear over the 38 Degrees theme. Try <b>Later</b> (dismiss) and <b>Try it now</b> (would redirect). Use <i>Replay</i> to show it again.</p>
+
+  <div class="stage">
+    <div class="browser-bar">
+      <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="url">library.38degrees.org.uk</span>
+    </div>
+
+    <div class="appbg">
+      <div style="font-weight:700;color:var(--orange);font-size:22px">▲ 38 Degrees</div>
+      <div class="nav">View files | Add new file | Tags | Search</div>
+      <div class="files">
+        <div class="thumb"></div><div class="thumb"></div><div class="thumb"></div><div class="thumb"></div>
+        <div class="thumb"></div><div class="thumb"></div><div class="thumb"></div><div class="thumb"></div>
+      </div>
+
+      <!-- The popup -->
+      <div class="overlay" id="ov">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mtitle">
+          <div class="top">
+            <button class="close" onclick="dismiss()" aria-label="Close">×</button>
+            <div class="badge">✨ New &amp; improved</div>
+            <h3 id="mtitle">There's a newer version in Flow</h3>
+          </div>
+          <div class="body">
+            <p>This file library now has a newer, improved home inside <b>Flow</b>. All of your files are available in <b>both apps</b>, so nothing moves or disappears — you can switch any time.</p>
+            <div class="steps">
+              To find it in Flow: open <b>Flow</b> → select <b>Toolkit</b> → then <b>Files</b>.
+            </div>
+            <p class="muted" style="font-size:13.5px">Would you like to try it now, or later?</p>
+          </div>
+          <div class="actions">
+            <button class="btn btn-later" onclick="dismiss()">Maybe later</button>
+            <button class="btn btn-now" onclick="goNow()">Try it now →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="replaybar">
+      <button onclick="replay()">⟳ Replay popup</button>
+    </div>
+  </div>
+
+  <div class="note" id="msg" style="display:none"></div>
+
+  <script>
+    function dismiss(){ document.getElementById('ov').classList.add('hidden'); flash('Dismissed — the popup is now hidden for the rest of the day (a cookie marks today as "seen").'); }
+    function goNow(){ flash('Would redirect to → https://act.38degrees.org.uk/admin/#media-library/items'); document.getElementById('ov').classList.add('hidden'); }
+    function replay(){ document.getElementById('ov').classList.remove('hidden'); document.getElementById('msg').style.display='none'; }
+    function flash(t){ var m=document.getElementById('msg'); m.textContent=t; m.style.display='block'; }
+  </script>
+
+  <!-- =================== BEHAVIOUR =================== -->
+  <h2>2. How it should behave</h2>
+  <table>
+    <tr><th>Question</th><th>Proposed answer</th></tr>
+    <tr><td>When does it show?</td><td>On the first page load of the calendar day, per browser. We store the last-shown date; if it isn't today, show the popup once.</td></tr>
+    <tr><td>"Try it now"</td><td>Redirects the browser to <code>https://act.38degrees.org.uk/admin/#media-library/items</code> and records today as seen.</td></tr>
+    <tr><td>"Maybe later" / close (×)</td><td>Closes the popup and records today as seen, so it won't reappear until tomorrow.</td></tr>
+    <tr><td>Where is "seen today" stored?</td><td>A small cookie / <code>localStorage</code> key holding the date, e.g. <code>flow_announce_seen=2026-06-22</code>. No database or server change needed.</td></tr>
+    <tr><td>Which users?</td><td>Everyone using the app — it lives in the shared layout. (Optionally only the <code>38degrees</code> theme.)</td></tr>
+    <tr><td>Dismissible?</td><td>Yes — close button, "Maybe later", clicking the dark backdrop, or pressing <kbd>Esc</kbd> all dismiss it.</td></tr>
+  </table>
+
+  <div class="note">"First time today" is intentionally per-day, not once-ever — it acts as a gentle, repeating nudge while people get used to Flow, without nagging on every page load.</div>
+
+  <!-- =================== IMPLEMENTATION =================== -->
+  <h2>3. Implementation plan</h2>
+  <p class="muted">Mah Bucket is a Rails 6.1 app using theme-based layout partials (<code>app/views/layouts/themes/&lt;theme&gt;/</code>) with jQuery + Turbolinks already loaded. The popup is purely front-end, so it slots in cleanly with no controller, model or migration changes.</p>
+
+  <div class="step">
+    <div class="n">1</div>
+    <div class="b">
+      <h3><span class="pill erb">ERB</span> Add a popup partial</h3>
+      <p>Create <code>app/views/layouts/themes/38degrees/_flow_announcement.html.erb</code> containing the modal markup (the dialog you see in the mockup above), rendered hidden by default.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="n">2</div>
+    <div class="b">
+      <h3><span class="pill erb">ERB</span> Render it from the layout</h3>
+      <p>Include it once in <code>app/views/layouts/application.html.erb</code>, just inside <code>&lt;body&gt;</code>, so it's available on every page:</p>
+<pre><span class="c">&lt;!-- app/views/layouts/application.html.erb --&gt;</span>
+&lt;body&gt;
+  <span class="k">&lt;%= render "layouts/themes/#{theme}/header" %&gt;</span>
+  <span class="k">&lt;%= render "layouts/themes/#{theme}/flow_announcement" %&gt;</span>
+  <span class="k">&lt;%= yield %&gt;</span>
+  ...</pre>
+      <p class="muted">A <code>default</code>-theme version can be an empty partial so non-38-Degrees deployments show nothing.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="n">3</div>
+    <div class="b">
+      <h3><span class="pill js">JS</span> Add the show-once-a-day logic</h3>
+      <p>Add a small script (e.g. <code>app/assets/javascripts/flow_announcement.coffee</code> or plain JS) that runs on load, checks the date marker, and shows the popup when needed. Outline:</p>
+<pre><span class="c">// runs on turbolinks:load</span>
+<span class="k">var</span> KEY = <span class="s">'flow_announce_seen'</span>;
+<span class="k">var</span> today = <span class="k">new</span> Date().toISOString().slice(0,10); <span class="c">// 2026-06-22</span>
+<span class="k">var</span> seen = localStorage.getItem(KEY);
+
+<span class="k">function</span> markSeen(){ localStorage.setItem(KEY, today); }
+
+<span class="k">if</span> (seen !== today) {
+  showModal();                          <span class="c">// reveal the partial</span>
+}
+
+<span class="c">// Try it now</span>
+onClick(<span class="s">'#flow-now'</span>, <span class="k">function</span>(){
+  markSeen();
+  window.location.href =
+    <span class="s">'https://act.38degrees.org.uk/admin/#media-library/items'</span>;
+});
+
+<span class="c">// Maybe later / close / backdrop / Esc</span>
+onClick(<span class="s">'#flow-later, .flow-close, .flow-backdrop'</span>, <span class="k">function</span>(){
+  markSeen();
+  hideModal();
+});</pre>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="n">4</div>
+    <div class="b">
+      <h3><span class="pill css">CSS</span> Add styling</h3>
+      <p>Add <code>app/assets/stylesheets/flow_announcement.scss</code> (auto-included via <code>require_tree</code>) for the overlay, modal card, brand-orange header and buttons — matching the styling in the mockup above.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="n">5</div>
+    <div class="b">
+      <h3>Tidy-ups &amp; tests</h3>
+      <ul>
+        <li>Make the URL and copy easy to change (a constant / <code>data-</code> attribute).</li>
+        <li>Optional RSpec/system test asserting the partial renders and the link points at the right URL.</li>
+        <li>Accessibility: <code>role="dialog"</code>, focus trap, <kbd>Esc</kbd> to close (already in the mockup markup).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- =================== DECISIONS =================== -->
+  <h2>4. A few things to confirm</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Frequency</h3>
+      <p class="muted">Once per <b>day</b> per browser (recommended), or once <b>ever</b> until dismissed permanently? The mockup assumes per-day.</p>
+    </div>
+    <div class="card">
+      <h3>Audience</h3>
+      <p class="muted">All themes, or only the live <code>38degrees</code> theme? The plan scopes it to 38 Degrees by default.</p>
+    </div>
+    <div class="card">
+      <h3>Copy &amp; tone</h3>
+      <p class="muted">Happy with the wording in the mockup, or want it tweaked (headline, button labels)?</p>
+    </div>
+    <div class="card">
+      <h3>Storage</h3>
+      <p class="muted"><code>localStorage</code> (survives, simple) vs a cookie (also sent to server). Both are front-end-only; recommending <code>localStorage</code>.</p>
+    </div>
+  </div>
+
+  <p class="muted" style="margin-top:30px">Once you're happy with the direction, I can implement steps 1–5 on the <code>claude/friendly-sagan-solgwq</code> branch.</p>
+
+</div>
+</body>
+</html>
