@@ -87,6 +87,10 @@ $flow-line: #e4e8ee;
   }
 }
 
+.flow-announce-stage.hidden {
+  display: none !important;
+}
+
 .flow-announce-body {
   padding: 22px 24px;
 
@@ -94,6 +98,11 @@ $flow-line: #e4e8ee;
     margin: 0 0 12px;
     font-size: 14.5px;
     color: $flow-ink;
+  }
+
+  a {
+    color: $flow-orange-dark;
+    font-weight: 600;
   }
 }
 

@@ -15,6 +15,17 @@ RSpec.describe 'Flow announcement popup' do
       )
       expect( response.body ).to have_css '#flow-now', text: 'Try it now'
     end
+
+    it 'includes a hidden "drop @ian a note" stage shown after Maybe later' do
+      get '/'
+
+      expect( response.body ).to have_css '[data-flow-stage="later"].hidden'
+      expect( response.body ).to have_css(
+        '[data-flow-stage="later"]',
+        text: 'drop @ian a note so he knows what\'s missing in the new version'
+      )
+      expect( response.body ).to have_css '.flow-done', text: 'Got it'
+    end
   end
 
   context 'with the default theme' do
