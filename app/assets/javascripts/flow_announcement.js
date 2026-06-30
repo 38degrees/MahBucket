@@ -2,7 +2,8 @@
 //
 // Shows the #flow-announce modal once per calendar day, per browser. The
 // last-shown date is stored in localStorage; if it isn't today, the popup is
-// revealed on load. Dismissing it (Maybe later / close / backdrop / Esc) or
+// revealed on load. "Maybe later" advances to a second stage asking the user
+// to drop @ian a note; dismissing it (Got it / close / backdrop / Esc) or
 // following "Try it now" records today as seen so it won't reappear until
 // tomorrow. Purely front-end: no controller, model or migration changes.
 
@@ -33,6 +34,18 @@
     modal.classList.add("hidden");
   }
 
+  // Reveal a named stage ([data-flow-stage="..."]) and hide the others.
+  function showStage(modal, name) {
+    var stages = modal.querySelectorAll("[data-flow-stage]");
+    Array.prototype.forEach.call(stages, function (stage) {
+      if (stage.getAttribute("data-flow-stage") === name) {
+        stage.classList.remove("hidden");
+      } else {
+        stage.classList.add("hidden");
+      }
+    });
+  }
+
   function init() {
     var modal = document.getElementById("flow-announce");
     if (!modal) {
@@ -55,8 +68,16 @@
       });
     }
 
-    // "Maybe later" / close button — record as seen and dismiss.
-    var dismissers = modal.querySelectorAll(".flow-later, .flow-close");
+    // "Maybe later" — don't dismiss yet; show the "drop @ian a note" stage.
+    var later = modal.querySelector(".flow-later");
+    if (later) {
+      later.addEventListener("click", function () {
+        showStage(modal, "later");
+      });
+    }
+
+    // Close button and "Got it" — record as seen and dismiss.
+    var dismissers = modal.querySelectorAll(".flow-close, .flow-done");
     Array.prototype.forEach.call(dismissers, function (el) {
       el.addEventListener("click", function () {
         markSeen();
